@@ -1,16 +1,19 @@
 import axios from 'axios';
 
-let host = "s://yg.ismartwork.cn";
-let baseURL = "http" + host + "/webapp/restful";
+let smartHost = 's://yg.ismartwork.cn';
+let smartWorkBaseUrl = 'http'+ smartHost +'/webapp/restful';
+
+let host = "://127.0.0.1";
+let baseURL = "http" + host + ":4000";
 let axiosConfig = {
   baseURL
 }
 let instance = axios.create(axiosConfig);
-
 export default {
   getHost: host,
   getAxios: instance,
   getBaseUrl: baseURL,
+  getSmartWorkBaseUrl: smartWorkBaseUrl,
   validateStatus: function (status) {
     return status >= 200 && status < 300; //default
   }

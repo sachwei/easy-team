@@ -68,7 +68,7 @@
         const userName = encodeURIComponent(this.ruleForm2.userName)
         const password = encodeURIComponent(EncryptService.encrypt(this.ruleForm2.password, this.ruleForm2.userName))
         const param = 'userName=' + userName + '&password=' + password + '&loginCode=&loginType=1&deviceId=00%3A15%3A5d%3A04%3A0f%3A00'
-        instance.post('/login', param).then((response) => {
+        instance.post('/user/login', param).then((response) => {
           const user = response.data
           if (user.errorCode === 0) {
             local.set('userInfo', user);

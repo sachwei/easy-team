@@ -1,0 +1,35 @@
+{
+    "users": {
+        "userName": "String",
+        "userCnName": "String",
+        "age": "Number",
+        "password": "String",
+        "phone": "Number",
+        "email": "String",
+        "teamName": "String",
+        "teamNo": "Number",
+        "isManager": "Boolean",
+        "sex": "Number",
+        "workNum": "String"
+    },
+    "workRecords": {
+        "userName": "String",
+        "userCnName": "String",
+        "workNum": "Number",
+        "workDate": "Date",
+        "workNote": "String",
+        "isConfirm": "Boolean"
+    },
+    "projects": {
+        "project_id": "String",
+        "name": "String"
+    },
+    "items": {
+        "item_id": "String",
+        "item_name": "String",
+        "plan_start_date": "Number",
+        "plan_end_date": "Number",
+        "actual_start_date": "Number",
+        "actual_end_date": "Number"
+    }
+}

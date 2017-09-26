@@ -13,7 +13,7 @@
           <i class='el-icon-d-arrow-left' v-else></i>
         </div>
       </div>
-      <el-menu default-active="0" router :collapse="isCollapse">
+      <el-menu default-active="/home" router :collapse="isCollapse">
         <template v-for="(item,index) in menus">
           <el-submenu :index="item.path" :key="item.path" v-if='item.children'>
             <template slot="title">
@@ -35,7 +35,7 @@
     <div class="right">
       <div class="toolbar">
         <div class="toolbar-left">
-          <p class="toolbar-title">日常工作系统</p>
+          <p class="toolbar-title">日常工作辅助系统</p>
         </div>
         <div class="toolbar-right">
           <el-dropdown trigger="click" class="main-menu">
@@ -67,7 +67,7 @@
   import local from '@/client/services/LocalStore'
 
   const menus = [
-    { name: '首页', path:'/home' },
+    { name: '首页', path:'/home/summary' },
     { name: '调休申请', path:'/home/apply'},
     { name: '系统设置', children: [
       { name: '个人设置', path: '/home/personal' },
@@ -89,7 +89,7 @@
       this.userInfo = JSON.parse(localStorage.getItem('userInfo'));
       console.log(httpService.getBaseUrl);
       this.$http = httpService.getAxios
-      this.headUrl = httpService.getBaseUrl + `/userimage/head/${this.userInfo.email}`
+      this.headUrl = httpService.getSmartWorkBaseUrl + `/userimage/head/${this.userInfo.email}`
     },
     methods: {
       menuSelect(index) {
@@ -162,13 +162,13 @@
 
   .home-view {
     display: flex;
+    width:100%;
     position: absolute;
     top: 0;
     bottom: 0;
-    left: 0;
-    right: 0;
   }
   .left {
+    flex:0 0 64px;
     background-color: #373D41;
     height: 100%;
   }
@@ -262,6 +262,8 @@
       flex: 1 1 auto;
       overflow-y: auto;
       width: 100%;
+
+      display: flex;
     }
   }
 </style>

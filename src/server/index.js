@@ -10,6 +10,10 @@ import webpackHotMiddleware from 'webpack-hot-middleware'
 
 import config from '../../build/webpack.dev.conf'
 
+var user = require('./routes/user');
+var data = require('./routes/data');
+// var excel = require('./routes/excel');
+
 const app = express()
 
 // uncomment after placing your favicon in /public
@@ -30,9 +34,16 @@ app.use(webpackDevMiddleware(compiler, {
 app.use(webpackHotMiddleware(compiler))
 
 app.use(express.static(path.join(__dirname, 'views')))
+app.engine('html', require('ejs').__express);
+app.set('view engine', 'html');
+
 app.get('/', function (req, res) {
   res.sendFile('./views/index.html')
 })
+
+app.use('/user', user);
+app.use('/data', data);
+// app.use('/excel', excel);
 
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {
