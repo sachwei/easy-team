@@ -2,7 +2,7 @@
   <div class="items-view">
     <div class="toolbar">
       <div class="left">
-        <el-button type="primary" @click="dialogFormVisible = true">新增产品</el-button>
+        <el-button type="primary" @click="addProject">新增产品</el-button>
       </div>
       <div class="right">
         <el-button-group>
@@ -71,10 +71,13 @@
 </template>
 
 <script>
+import httpService from '@/client/services/HttpService'
 
 export default {
   data() {
     return {
+      $http: httpService.getAxios,
+      userList: [],
       dialogFormVisible: false,
       form: {
         code: '20160801',
@@ -118,6 +121,19 @@ export default {
           totalMoney: '600,000'
         }
       ]
+    }
+  },
+  mounted() {
+    console.log(this.$http);
+    this.$http.get('/user/getAllUsers').then((res) => {
+      console.log(res.data);
+    }, () => {
+
+    });
+  },
+  methods: {
+    addProject() {
+      tihs.dialogFormVisible = true;
     }
   }
 }

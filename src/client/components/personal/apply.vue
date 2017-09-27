@@ -1,5 +1,5 @@
 <template>
-  <div class="apply-view">
+  <div class="apply-view">    
     <div>
       <el-form :inline="true" :model="formInline" class="demo-form-inline">
         <el-form-item label="日期">
@@ -32,8 +32,8 @@
                 {{ props.row.date }}
             </template>
         </el-table-column>
-        <el-table-column label="年月" prop="date"></el-table-column>
-        <el-table-column label="加班天数" prop="name"> </el-table-column>
+        <el-table-column label="年月" prop="date" width="100px"></el-table-column>
+        <el-table-column label="加班天数" prop="name" width="100px"> </el-table-column>
         <el-table-column label="调休天数" prop="address"> </el-table-column>
         <el-table-column label="操作">
           <template scope="props">
@@ -59,7 +59,7 @@ export default {
           return time.getTime() < Date.now() - 8.64e7;
         }
       },
-       tableData: [{
+      tableData: [{
           date: '2016-05',
           name: '王小虎',
           address: '上海市普陀区金沙江路 1518 弄'
@@ -142,10 +142,12 @@ export default {
 
 <style>
   .apply-view {
-      padding: 10px;
-      flex: 1 1 auto;
-      display: flex;
-      flex-direction: column;
+    width: 100%;
+    min-width: 850px;
+    padding: 10px;
+    flex: 1 1 auto;
+    display: flex;
+    flex-direction: column;
   }
   .table1 {
       width: 100%;

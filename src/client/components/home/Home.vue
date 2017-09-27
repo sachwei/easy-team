@@ -13,7 +13,7 @@
           <i class='el-icon-d-arrow-left' v-else></i>
         </div>
       </div>
-      <el-menu default-active="/home" router :collapse="isCollapse">
+      <el-menu default-active="/home/summary" router :collapse="isCollapse">
         <template v-for="(item,index) in menus">
           <el-submenu :index="item.path" :key="item.path" v-if='item.children'>
             <template slot="title">
@@ -69,7 +69,11 @@
   const menus = [
     { name: '首页', path:'/home/summary' },
     { name: '调休申请', path:'/home/apply'},
-    { name: '系统设置', children: [
+    { name: '项目管理', path: '1', children: [
+      { name: '产品管理', path: '/home/projects' },
+      { name: '项目管理', path: '/home/items'}
+    ]},
+    { name: '系统设置', path: '2', children: [
       { name: '个人设置', path: '/home/personal' },
       { name: '用户设置', path: '/home/userSetting'}
     ]}

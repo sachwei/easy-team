@@ -21,8 +21,12 @@
         "isConfirm": "Boolean"
     },
     "projects": {
-        "project_id": "String",
-        "name": "String"
+        "code": "String",
+        "name": "String",
+        "owner": "String",
+        "ownerId": "String",
+        "summary": "String",
+        "createDate": "Number"
     },
     "items": {
         "item_id": "String",
