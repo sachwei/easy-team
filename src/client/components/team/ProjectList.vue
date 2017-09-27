@@ -130,7 +130,6 @@ export default {
       this.dialogFormVisible = true;
     },
     doAddProject() {
-      console.log(this.form);
       this.$http.post('/project/saveProject', this.form).then((res) => {
         if(res && res.data) {
           this.userList = res.data;

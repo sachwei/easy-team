@@ -59,7 +59,6 @@ DB.prototype.save = function (table_name, fields, callback) {
         if (callback) callback({msg: 'Wrong field name'});
         return false;
     }
-
     var node_model = this.getConnection(table_name);
     var mongooseEntity = new node_model(fields);
     mongooseEntity.save(function (err, res) {
