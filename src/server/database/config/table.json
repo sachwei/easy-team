@@ -10,7 +10,8 @@
         "teamNo": "Number",
         "isManager": "Boolean",
         "sex": "Number",
-        "workNum": "String"
+        "workNum": "String",
+        "role": "String"
     },
     "workRecords": {
         "userName": "String",

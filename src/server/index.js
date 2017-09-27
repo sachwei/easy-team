@@ -12,6 +12,7 @@ import config from '../../build/webpack.dev.conf'
 
 var user = require('./routes/user');
 var data = require('./routes/data');
+var project = require('./routes/team/project');
 // var excel = require('./routes/excel');
 
 const app = express()
@@ -43,6 +44,7 @@ app.get('/', function (req, res) {
 
 app.use('/user', user);
 app.use('/data', data);
+app.use('/project', project);
 // app.use('/excel', excel);
 
 // catch 404 and forward to error handler

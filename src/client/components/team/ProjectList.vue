@@ -2,12 +2,13 @@
   <div class="items-view">
     <div class="toolbar">
       <div class="left">
-        <el-button type="primary" @click="dialogFormVisible = true">新增产品</el-button>
+        <el-button type="primary" @click="openDialog">新增产品</el-button>
       </div>
       <div class="right">
         <el-button-group>
           <el-button size="small">列表</el-button>
           <el-button size="small">卡片</el-button>
+          <el-button size="small">显示停用</el-button>
         </el-button-group>
       </div>
     </div>
@@ -31,7 +32,7 @@
           <template scope="props">
             <el-button size="small" @click="handleEdit(props.$index, props.row)">编辑</el-button>
             <el-button size="small" type="danger" @click="handleDelete(props.$index, props.row)">删除</el-button>
-            <el-button size="small" type="danger" @click="handleDelete(props.$index, props.row)">停用</el-button>
+            <el-button size="small" type="danger" @click="handleStop(props.$index, props.row)">停用</el-button>
           </template>
         </el-table-column>
       </el-table>
@@ -46,12 +47,12 @@
           <el-input v-model="form.name"></el-input>
         </el-form-item>
         <el-form-item label="负责人">
-          <el-select v-model="value" style="width:200px" placeholder="请选择">
+          <el-select v-model="form.ownerId" style="width:200px" placeholder="请选择">
           <el-option
             v-for="item in userList"
-            :key="item.value"
-            :label="item.label"
-            :value="item.value">
+            :key="item.email"
+            :label="item.userCnName"
+            :value="item.email">
           </el-option>
         </el-select>
         </el-form-item>
@@ -64,28 +65,22 @@
       </el-form>
       <div slot="footer" class="dialog-footer">
         <el-button @click="dialogFormVisible = false">取 消</el-button>
-        <el-button type="primary" @click="dialogFormVisible = false">确 定</el-button>
+        <el-button type="primary" @click="doAddProject">确 定</el-button>
       </div>
     </el-dialog>
   </div>
 </template>
 
 <script>
+import httpService from '@/client/services/HttpService'
 
 export default {
   data() {
     return {
+      $http: {},
+      userList: [],
       dialogFormVisible: false,
-      form: {
-        code: '20160801',
-        name: '财务家园',
-        owner: '陆春里',
-        ownerId: "123",
-        summary: '财务人员工作办公交流平台',
-        createDate: '2016-8',
-        sealCount: '2',
-        totalMoney: '1,500,000'
-      },
+      form: {},
       tableData: [
         {
           code: '20160801',
@@ -118,6 +113,36 @@ export default {
           totalMoney: '600,000'
         }
       ]
+    }
+  },
+  mounted() {
+    this.$http = httpService.getAxios;
+    this.$http.get('/user/getAllUsers').then((res) => {
+      if(res && res.data){
+        this.userList = res.data;
+      }
+    }, () => {
+
+    });
+  },
+  methods: {
+    openDialog() {
+      this.dialogFormVisible = true;
+    },
+    doAddProject() {
+      console.log(this.form);
+      this.$http.post('/project/saveProject', this.form).then((res) => {
+        if(res && res.data) {
+          this.userList = res.data;
+        }
+      }, () => {
+
+      });
+      this.dialogFormVisible = false;
+    },
+    handleEdit(index, row) {
+      this.form = row;
+      this.dialogFormVisible = true;
     }
   }
 }
