@@ -56,11 +56,12 @@ DB.prototype.save = function (table_name, fields, callback) {
         if (!this.tabConf[table_name][i]) err_num ++;
     }
     if (err_num > 0) {
-        if (callback) callback({msg: 'Wrong field name'});
-        return false;
+        logger.error('Fields is more');
     }
     var node_model = this.getConnection(table_name);
     var mongooseEntity = new node_model(fields);
+
+    console.log(mongooseEntity);
     mongooseEntity.save(function (err, res) {
         if (err) {
             if (callback) callback(err);

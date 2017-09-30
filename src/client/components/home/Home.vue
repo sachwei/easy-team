@@ -1,65 +1,58 @@
 <template>
-  <div class="home-view">
-    <div class="left">
-      <div class="left-head" :class="{ 'left-head-collapse': isCollapse }">
-        <div class="head" :class="{ 'head-collapse': isCollapse }">
-          <img :src="headUrl" v-loading='true'>
-        </div>
-        <p class="user-info" :class="{ 'user-info-collapse': isCollapse }">
-          {{ userInfo.level }}
-        </p>
-        <div class="collapse" @click='collapse' :class="{ 'collapse-collapse': isCollapse }">
-          <i class='el-icon-d-arrow-right' v-if='isCollapse'></i>
-          <i class='el-icon-d-arrow-left' v-else></i>
-        </div>
+  <el-row class="home-view">
+    <el-row class="toolbar">
+      <el-col :span="4" class="toolbar-logo">
+        <img src="../../static/img/logo.jpg" alt="">
+        <i class="el-icon-menu"></i>
+      </el-col>
+      <div class="toolbar-left">
+        <p class="toolbar-title">日常工作辅助系统</p>
       </div>
-      <el-menu default-active="/home/summary" router :collapse="isCollapse">
-        <template v-for="(item,index) in menus">
-          <el-submenu :index="item.path" :key="item.path" v-if='item.children'>
-            <template slot="title">
-              <i class="el-icon-message"></i>
-              <span slot="title">{{ item.name }}</span>
-            </template>
-            <el-menu-item v-for="child in item.children" :index="child.path" :key='child.path'>
-              <i class="el-icon-message"></i>
-              <span slot="title">{{child.name}}</span>
-            </el-menu-item>
-          </el-submenu>
-          <el-menu-item v-else :index="item.path" :key='item.path'>
-            <i class="el-icon-message"></i>
-            <span slot="title">{{item.name}}</span>
-          </el-menu-item>
-        </template>
-      </el-menu>
-    </div>
-    <div class="right">
-      <div class="toolbar">
-        <div class="toolbar-left">
-          <p class="toolbar-title">日常工作辅助系统</p>
-        </div>
-        <div class="toolbar-right">
-          <el-dropdown trigger="click" class="main-menu">
+      <div class="toolbar-right">
+        <img class="img-head" :src="headUrl" alt="">
+        <el-dropdown trigger="click" class="main-menu" @command="handleCommand">
             <span class="el-dropdown-link">
               {{ userInfo.userName }}<i class="el-icon-caret-bottom el-icon--right"></i>
             </span>
-            <el-dropdown-menu slot="dropdown">
-              <el-dropdown-item>
-                <i class="el-icon-setting"></i>
-                <span>系统设置</span>
-              </el-dropdown-item>
-              <el-dropdown-item divided>
-                <i class="el-icon-delete2"></i>
-                <span>退出系统</span>
-              </el-dropdown-item>
-            </el-dropdown-menu>
-          </el-dropdown>
-        </div>
+          <el-dropdown-menu slot="dropdown">
+            <el-dropdown-item command="setting">
+              <i class="el-icon-setting"></i>
+              <span>系统设置</span>
+            </el-dropdown-item>
+            <el-dropdown-item divided command="exit">
+              <i class="el-icon-delete2"></i>
+              <span>退出系统</span>
+            </el-dropdown-item>
+          </el-dropdown-menu>
+        </el-dropdown>
       </div>
-      <div class="content">
+    </el-row>
+    <el-row class="main-container">
+      <el-col :span="4" class="left">
+        <el-menu default-active="/home/summary" router>
+          <template v-for="(item,index) in menus">
+            <el-submenu :index="item.path" :key="item.path" v-if='item.children'>
+              <template slot="title">
+                <i class="el-icon-message"></i>
+                <span slot="title">{{ item.name }}</span>
+              </template>
+              <el-menu-item v-for="child in item.children" :index="child.path" :key='child.path'>
+                <i class="el-icon-message"></i>
+                <span slot="title">{{child.name}}</span>
+              </el-menu-item>
+            </el-submenu>
+            <el-menu-item v-else :index="item.path" :key='item.path'>
+              <i class="el-icon-message"></i>
+              <span slot="title">{{item.name}}</span>
+            </el-menu-item>
+          </template>
+        </el-menu>
+      </el-col>
+      <el-col :span="20" class="content">
         <router-view></router-view>
-      </div>
-    </div>
-  </div>
+      </el-col>
+    </el-row>
+  </el-row>
 </template>
 
 <script>
@@ -71,18 +64,20 @@
     { name: '调休申请', path:'/home/apply'},
     { name: '项目管理', path: '1', children: [
       { name: '产品管理', path: '/home/projects' },
-      { name: '项目管理', path: '/home/items'}
+      { name: '项目管理', path: '/home/items'},
+      { name: '资源管理', path: '/home/resource'}
     ]},
-    { name: '系统设置', path: '2', children: [
+    { name: '售前运营', path:'/home/apply'},
+    { name: '商务', path:'/home/apply'},
+    { name: '设置', path: '2', children: [
       { name: '个人设置', path: '/home/personal' },
-      { name: '用户设置', path: '/home/userSetting'}
+      { name: '系统设置', path: '/home/userSetting'}
     ]}
   ];
 
   export default {
     data() {
       return {
-        isCollapse: false,
         $http: null,
         headUrl: '',
         userInfo: {},
@@ -91,9 +86,9 @@
     },
     mounted() {
       this.userInfo = JSON.parse(localStorage.getItem('userInfo'));
-      console.log(httpService.getBaseUrl);
       this.$http = httpService.getAxios
       this.headUrl = httpService.getSmartWorkBaseUrl + `/userimage/head/${this.userInfo.email}`
+      // this.$router.push({ path: '/home/summary' })
     },
     methods: {
       menuSelect(index) {
@@ -109,6 +104,11 @@
       collapse() {
         console.log(this.isCollapse);
         this.isCollapse = !this.isCollapse;
+      },
+      handleCommand(command){
+        if(command === 'exit'){
+          this.$router.push({ path: '/' })
+        }
       }
     }
   }
@@ -116,131 +116,39 @@
 
 <style lang='scss' scoped>
 
-  .el-menu{
-    background-color: transparent;
-  }
-
-  .el-menu-item:hover, .el-submenu .el-menu-item:hover, .el-submenu__title:hover {
-    background-color: #7ed2df;
-  }
-
-  .el-menu-item, .el-submenu__title {
-    color: #fff;
-  }
-
-  .el-menu .el-menu-item, .el-submenu .el-submenu__title {
-    height: 46px;
-    line-height: 46px;
-  }
-
-  .el-menu-item:hover, .el-submenu .el-menu-item:hover, .el-submenu__title:hover {
-    background-color: #7ed2df;
-  }
-
-  .el-submenu .el-menu-item {
-    background-color: #333744
-  }
-
-  .el-submenu .el-menu-item:hover {
-    background-color: #333744
-  }
-
-  .el-submenu .el-menu-item.is-active, .el-menu-item.is-active,
-  .el-submenu .el-menu-item.is-active:hover, .el-menu-item.is-active:hover {
-    background-color: #00C1DE;
-    color: #fff;
-  }
-
-  .el-menu .iconfont {
-    vertical-align: baseline;
-    margin-right: 6px;
-  }
-
-  .el-submenu__title span,i{
-    color:white;
-  }
-
-  .el-menu-item, .el-submenu__title{
-    color: white !important;
-  }
-
   .home-view {
-    display: flex;
-    width:100%;
     position: absolute;
-    top: 0;
-    bottom: 0;
-  }
-  .left {
-    flex:0 0 64px;
-    background-color: #373D41;
-    height: 100%;
-  }
-  .left-head-collapse {
-    width: 64px !important;
-    height: 50px !important;
-  }
-
-  .left-head {
-    height: 80px;
-    width: 260px;
-    background-color: #373D41;
-    display: flex;    
-    align-items: center;
-    justify-content: center;
-    transition: all .3s ease-in-out;
-
-    .head-collapse {
-      display: none;
-    }
-    .head {
-      margin-left: 20px;      
-      width: 70px;
-      height: 50px;
-      border: 2px solid white;
-      border-radius: 100px;
-      transition: all .3s;
-      overflow: hidden;
-
-      img{
-        height: 100%;
-        width: 100%;
-      }
-    }
-
-    .user-info-collapse {
-      display: none;
-    }
-    .user-info{
-      font-size: .7rem;
-      margin-left: 10px;      
-      color: white;
-    }
-
-    .collapse-collapse{
-       margin-right: 0 !important;
-    }
-    .collapse{
-      margin-right: 20px;
-      margin-left: 10px;
-      color: grey;
-      cursor: pointer;
-    }
-  }
-
-  .right{
-    height: 100%;
-    flex: 1 1 auto;
-    display: flex;
-    flex-direction: column;
+    top:0;
+    bottom:0;
+    width:100%;
 
     .toolbar{
-      flex: 0 0 50px;
       height: 50px;
       width: 100%;
-      background-color: #373D41;
+      background-color: #333333;
       display: flex;
       align-items: center;
+
+      .toolbar-logo{
+        min-width: 180px;
+        height: 50px;
+        display: flex;
+        align-items: center;
+        border-right: 1px solid black;
+
+        img{
+          height:100%;
+          flex:1 1 auto;
+        }
+
+        i{
+          margin-right: 10px;
+          cursor: pointer;
+        }
+        i:hover{
+          color: #fff;
+        }
+      }
 
       .toolbar-title{
         color: white;
@@ -255,6 +163,14 @@
       .toolbar-right{
         cursor: pointer;
         margin-right: 20px;
+        display: flex;
+        align-items: center;
+      }
+
+      .img-head{
+        height: 36px;
+        border-radius: 18px;
+        margin-right: 10px;
       }
 
       .toolbar-right span{
@@ -262,12 +178,28 @@
       }
     }
 
-    .content{
-      flex: 1 1 auto;
-      overflow-y: auto;
-      width: 100%;
-
+    .main-container{
+      position: absolute;
+      top:50px;
+      bottom:0;
+      overflow: hidden;
+      width:100%;
       display: flex;
+
+      .left{
+        overflow: hidden;
+        min-width: 180px;
+
+        .el-menu {
+          height: 100%;
+          border-radius: 0;
+        }
+      }
+
+      .content {
+        padding: 10px 10px 1px 10px;
+      }
     }
   }
+
 </style>

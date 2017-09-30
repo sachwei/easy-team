@@ -142,27 +142,6 @@ export default {
 
 <style>
   .apply-view {
-    width: 100%;
-    min-width: 850px;
-    padding: 10px;
-    flex: 1 1 auto;
-    display: flex;
-    flex-direction: column;
-  }
-  .table1 {
-      width: 100%;
-      max-height: 100%;
-      margin-top: 10px;
-  }
-  .demo-table-expand {
-    font-size: 0;
-  }
-  .demo-table-expand label {
-    width: 90px;
-    color: #99a9bf;
-  }
-  .demo-table-expand .el-form-item {
-    margin-right: 0;
-    margin-bottom: 0;
+    width:100%;
   }
 </style>

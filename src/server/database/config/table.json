@@ -27,14 +27,21 @@
         "owner": "String",
         "ownerId": "String",
         "summary": "String",
-        "createDate": "Number"
+        "createDate": "Date"
     },
     "items": {
-        "item_id": "String",
-        "item_name": "String",
-        "plan_start_date": "Number",
-        "plan_end_date": "Number",
-        "actual_start_date": "Number",
-        "actual_end_date": "Number"
+        "code": "String",
+        "name": "String",
+        "owner": "String",
+        "planStartDate": "Date",
+        "planEndDate": "Date",
+        "actualStartDate": "Date",
+        "actualEndDate": "Date",
+        "summary": "String",
+        "customer": "String",
+        "saler": "String",
+        "salerOrg": "String",
+        "money": "Number",
+        "note": "String"
     }
 }

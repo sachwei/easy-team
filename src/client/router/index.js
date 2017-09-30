@@ -11,7 +11,8 @@ const routes = [
         { name: 'personal', path: 'personal', component: require('../components/setting/Personal.vue') },
         { name: 'summary', path: 'summary', component: require('../components/home/Summary.vue') },
         { name: 'projects', path: 'projects', component: require('../components/team/ProjectList.vue') },
-        { name: 'items', path: 'items', component: require('../components/team/ItemList.vue') }
+        { name: 'items', path: 'items', component: require('../components/team/ItemList.vue') },
+        { name: 'resource', path: 'resource', component: require('../components/team/Resource.vue') }
     ]}
 ]
 

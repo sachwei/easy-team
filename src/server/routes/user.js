@@ -12,6 +12,7 @@ router.post('/login', function(req, res, next) {
   dbUtils.getLoginHttp().post('/login', param).then((response) => {
     const user = response.data
     if (user.errorCode === 0) {
+      req.session.user = user;
       res.json(user);
     } else {
       res.send("用户名密码错误");

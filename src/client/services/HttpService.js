@@ -3,7 +3,7 @@ import axios from 'axios';
 let smartHost = 's://yg.ismartwork.cn';
 let smartWorkBaseUrl = 'http'+ smartHost +'/webapp/restful';
 
-let host = "://127.0.0.1";
+let host = "://localhost";
 let baseURL = "http" + host + ":4000";
 let axiosConfig = {
   baseURL

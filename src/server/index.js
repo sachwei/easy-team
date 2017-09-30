@@ -5,6 +5,7 @@ import logger from 'morgan'
 import cookieParser from 'cookie-parser'
 import bodyParser from 'body-parser'
 import webpack from 'webpack'
+import session from 'express-session'
 import webpackDevMiddleware from 'webpack-dev-middleware'
 import webpackHotMiddleware from 'webpack-hot-middleware'
 
@@ -26,7 +27,6 @@ app.use(cookieParser())
 app.use(express.static(path.join(__dirname, 'public')))
 
 const compiler = webpack(config)
-
 app.use(webpackDevMiddleware(compiler, {
   publicPath: config.output.publicPath,
   stats: { colors: true }
@@ -37,6 +37,27 @@ app.use(webpackHotMiddleware(compiler))
 app.use(express.static(path.join(__dirname, 'views')))
 app.engine('html', require('ejs').__express);
 app.set('view engine', 'html');
+
+// 会话过期时间1小时
+app.use(session({
+  secret:'secret',
+  resave:true,
+  saveUninitialized: false,
+  cookie:{
+    maxAge:1000 * 60 //过期时间设置(单位毫秒)
+  }
+}));
+
+app.use(function (req, res, next) {
+  console.log(req.url + ',' + req.originalUrl + ',' + req.baseUrl);
+  
+  if(req.url === '/user/login' || req.session.user) {
+    next();
+  } else {
+    console.log("请重新登录");
+    res.redirect('/');
+  }
+});
 
 app.get('/', function (req, res) {
   res.sendFile('./views/index.html')
