@@ -3,7 +3,6 @@
     <el-row class="toolbar">
       <el-col :span="4" class="toolbar-logo">
         <img src="../../static/img/logo.jpg" alt="">
-        <i class="el-icon-menu"></i>
       </el-col>
       <div class="toolbar-left">
         <p class="toolbar-title">日常工作辅助系统</p>
@@ -88,7 +87,8 @@
       this.userInfo = JSON.parse(localStorage.getItem('userInfo'));
       this.$http = httpService.getAxios
       this.headUrl = httpService.getSmartWorkBaseUrl + `/userimage/head/${this.userInfo.email}`
-      // this.$router.push({ path: '/home/summary' })
+      console.log(this.$router);
+//      this.$router.push({ path: '/home/summary' })
     },
     methods: {
       menuSelect(index) {
@@ -140,14 +140,6 @@
           height:100%;
           flex:1 1 auto;
         }
-
-        i{
-          margin-right: 10px;
-          cursor: pointer;
-        }
-        i:hover{
-          color: #fff;
-        }
       }
 
       .toolbar-title{
@@ -198,6 +190,8 @@
 
       .content {
         padding: 10px 10px 1px 10px;
+        overflow-y: auto;
+        min-width: 800px;
       }
     }
   }
