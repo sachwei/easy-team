@@ -20,13 +20,13 @@ let router = new Router({
     routes: routes
 })
 
-// router.beforeEach((to, from, next) => {
-//     let user = JSON.parse(window.localStorage.getItem('userInfo'))
-//     if (!user) {
-//         next({path: '/'})
-//     } else {
-//         next()
-//     }
-// })
+router.beforeEach((to, from, next) => {
+    let user = JSON.parse(window.localStorage.getItem('userInfo'))
+    if (to.name !== 'login' && !user) {
+        next({path: '/'})
+    } else {
+        next()
+    }
+})
 
 export default router
