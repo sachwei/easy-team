@@ -50,11 +50,12 @@ app.use(session({
 
 app.use(function (req, res, next) {
   console.log(req.url + ',' + req.originalUrl + ',' + req.baseUrl);
-  
+
   if(req.url === '/user/login' || req.session.user) {
     next();
   } else {
     console.log("请重新登录");
+    req.session.error = -1;
     res.redirect('/');
   }
 });
