@@ -1,6 +1,5 @@
 var express = require('express');
 var router = express.Router();
-var dbUtils = require('./dao/smartWorkUtils');
 var MongoDB = require('../database/mongodb');
 
 router.post('/login', function(req, res, next) {

@@ -6,7 +6,7 @@ var path = require('path');
 var mongoose = require('mongoose');
 var logger = require('pomelo-logger').getLogger('mongodb-log');
 mongoose.Promise = global.Promise;
-var db = mongoose.connect('mongodb://easy:123456@127.0.0.1:27017/compensated');
+var db = mongoose.connect('mongodb://118.24.112.95:27017/work', { user: "yemanman", pass: "k2ehwc7n!@" });
 
 var Schema = mongoose.Schema;
 

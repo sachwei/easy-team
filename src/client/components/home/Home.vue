@@ -86,7 +86,6 @@
     mounted() {
       this.userInfo = JSON.parse(localStorage.getItem('userInfo'));
       this.$http = httpService.getAxios
-      this.headUrl = httpService.getSmartWorkBaseUrl + `/userimage/head/${this.userInfo.email}`
       console.log(this.$router);
 //      this.$router.push({ path: '/home/summary' })
     },
