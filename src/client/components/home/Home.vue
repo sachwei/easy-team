@@ -2,7 +2,7 @@
   <el-row class="home-view">
     <el-row class="toolbar">
       <el-col :span="4" class="toolbar-logo">
-        <img src="../../static/img/logo.jpg" alt="">
+        <img src="" alt="">
       </el-col>
       <div class="toolbar-left">
         <p class="toolbar-title">日常工作辅助系统</p>
